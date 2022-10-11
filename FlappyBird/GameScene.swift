@@ -69,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let itemGetSoundURL = Bundle.main.url(forResource: "itemGetSound", withExtension: "mp3")
         do {
             itemGetPlayer = try AVAudioPlayer(contentsOf: itemGetSoundURL!)
+            itemGetPlayer?.prepareToPlay()
         } catch {
             print("error...")
         }
@@ -410,6 +411,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contact.bodyA.node?.removeFromParent()
             if (contact.bodyA.categoryBitMask & itemCategory) == itemCategory {
                 contact.bodyA.node?.removeFromParent()
+            }
+            if (contact.bodyB.categoryBitMask & itemCategory) == itemCategory {
+                contact.bodyB.node?.removeFromParent()
             }
             itemGetPlayer?.play()
             itemScore += 1
